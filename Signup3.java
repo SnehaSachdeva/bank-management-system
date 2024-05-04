@@ -14,7 +14,7 @@ public class Signup3 extends JFrame implements ActionListener {
     String formno;
     Signup3(String formno){
         this.formno = formno;
-        
+       
         setLayout(null);
         
         l1=new JLabel("Page 3: Account Details");
@@ -213,7 +213,8 @@ public class Signup3 extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(null, "Card number"+ cardnumber+"\n Pin:" + pin);
 
                  }
-                
+                 setVisible(false);
+                 new deposit(pin).setVisible(false);
             }
             catch(Exception e){
                 System.out.println(e);
@@ -221,7 +222,8 @@ public class Signup3 extends JFrame implements ActionListener {
             
        }
     else if(ae.getSource()== cancel){
-          
+          setVisible(false);
+          new Login().setVisible(true);
        }
     }
 }

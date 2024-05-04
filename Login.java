@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.JFrame;
+import java.sql.*;
 
 public class Login  extends JFrame implements ActionListener{
         //    ActionListener interface so that it carries value input and perform some action after clicking on buttons
@@ -19,7 +20,7 @@ public class Login  extends JFrame implements ActionListener{
         
         setLayout(null);// remove the bydefault layout of frame so that we create custom layout further
         //setting icon using Imageicon class from java swing
-       ImageIcon i1 =new ImageIcon(ClassLoader.getSystemResource("icons/logo.jpg"));
+       ImageIcon i1 =new ImageIcon(ClassLoader.getSystemResource("icons/logo1.jpg"));
        //give size and scalling to image logo using ScaledInstance method and image classs from AWT     
        Image i2 = i1.getImage().getScaledInstance(100, 100,Image.SCALE_DEFAULT);
        
@@ -28,13 +29,13 @@ public class Login  extends JFrame implements ActionListener{
        ImageIcon i3 =  new ImageIcon(i2);
        JLabel label = new JLabel(i3);
        //setting location of label/logo in frame so we use setbound(dist from left, top, height, widht)
-       label.setBounds(100,30,100,100);//custom layout
+       label.setBounds(90,30,100,100);//custom layout
         
        add(label);//display or add image icon from jlable
         //
        JLabel text =new JLabel("WELCOME TO ATM");
-       text.setFont(new Font("Osward",Font.BOLD,38));
-       text.setBounds(200,60,400,40);
+       text.setFont(new Font("Times New Roman",Font.BOLD,38));
+       text.setBounds(210,60,400,40);
        add(text);
        
       //card no.
@@ -106,7 +107,24 @@ public class Login  extends JFrame implements ActionListener{
              pintext.setText("");
          }
          else if(e.getSource() == login){
+             Conn cc = new Conn();
+             String cardnumber= cardtext.getText();
+             String pin=pintext.getText();
              
+             String query ="Select* from login where Card_number ='"+cardnumber+"' and Pin_number = '"+pin+"'";
+             try{
+                 ResultSet rs = cc.s.executeQuery(query);
+                if(rs.next()){
+                    setVisible(false);
+                    new Transactions(pin).setVisible(true);
+                } else{
+                    JOptionPane.showMessageDialog(null, "Incorrect card number or pin");
+                }
+             
+             }
+             catch(Exception ex){
+                 System.out.println(ex);
+             }
          }
          else if (e.getSource()== Signup){
              setVisible(false);
